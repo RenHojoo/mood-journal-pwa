@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/mood-journal-pwa/assets/icon-Drhcwg3O.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#d66a8c" />
+    <meta name="description" content="Track your daily moods and keep a personal journal" />
+    <link rel="manifest" href="/mood-journal-pwa/manifest.json" />
+    <link rel="apple-touch-icon" href="/mood-journal-pwa/assets/icon-Drhcwg3O.png" />
+    <title>Mood Journal</title>
+    <script type="module" crossorigin src="/mood-journal-pwa/assets/index-DNQ4Dvum.js"></script>
+    <link rel="stylesheet" crossorigin href="/mood-journal-pwa/assets/index-DNSebSUg.css">
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js').then(
+            (registration) => {
+              console.log('ServiceWorker registered:', registration.scope);
+            },
+            (error) => {
+              console.log('ServiceWorker registration failed:', error);
+            }
+          );
+        });
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,884 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================================
+   CSS CUSTOM PROPERTIES & GLOBAL VARIABLES
+   ============================================================================ */
+:root {
+  --color-base-bg: #1e1e1e;
+  --color-accent: #d66a8c;
+  --color-text: #bababa;
+  --color-mood-grey: #78716c;
+  --color-mood-red: #a63939;
+  --color-mood-orange: #c25e28;
+  --color-mood-yellow: #a98d00;
+  --color-mood-green: #5b7d2a;
+  --color-mood-blue: #2b748d;
+  --color-mood-purple: #764398;
+  --gradient-from: #171717;
+  --gradient-via: #424242;
+  --gradient-to: #171717;
+}
+
+/* ============================================================================
+   GLOBAL STYLES & RESETS
+   ============================================================================ */
+html,
+body {
+  overflow-x: hidden;
+  background-color: var(--color-base-bg);
+  color: var(--color-text);
+  font-size: 1rem;
+}
+
+.bg-dynamic-gradient {
+  background: linear-gradient(to bottom right, var(--gradient-from) 0%, var(--gradient-via) 49.25%, var(--gradient-via) 50.75%, var(--gradient-to) 100%);
+}
+
+div,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+span,
+button,
+input,
+textarea,
+label {
+  color: inherit;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--tw-placeholder-color);
+  opacity: 0.4;
+}
+
+/* ============================================================================
+   LAYOUT & FLEXBOX UTILITIES
+   ============================================================================ */
+@layer components {
+  .flex-center {
+    @apply flex items-center justify-center;
+  }
+  .flex-between {
+    @apply flex items-center justify-between;
+  }
+  .flex-col-center {
+    @apply flex flex-col items-center justify-center;
+  }
+
+  .card-interactive {
+    @apply card-base cursor-pointer hover:shadow-xl transition-all duration-200 hover:scale-[1.02];
+  }
+
+  /* ============================================================================
+     CARDS & CONTAINERS
+     ============================================================================ */
+  .card-base {
+    @apply bg-base-light rounded-2xl shadow-lg;
+    background-color: var(--color-base-bg);
+  }
+
+  .modal-overlay {
+    @apply fixed inset-0 bg-black bg-opacity-50 flex-center p-4 z-50;
+  }
+
+  /* ============================================================================
+     BUTTON SYSTEM
+     ============================================================================ */
+  .btn-base {
+    @apply rounded-lg font-medium transition-all duration-200 focus:outline-none;
+  }
+
+  .btn-base:hover {
+    @apply scale-105 brightness-110;
+  }
+
+  .btn-interactive {
+    @apply btn-base p-2 sm:p-2.5 md:p-3 rounded-full hover:bg-white/10;
+  }
+
+  .btn-icon {
+    @apply btn-interactive;
+  }
+
+  .button-primary {
+    color: var(--color-text);
+  }
+  .button-secondary {
+    @apply bg-white/10 hover:bg-white/20;
+  }
+  .button-ghost {
+    @apply hover:bg-white/10;
+  }
+
+  .button-size-sm {
+    @apply px-3 py-1.5 text-sm;
+  }
+  .button-size-md {
+    @apply px-4 py-2.5;
+  }
+  .button-size-lg {
+    @apply px-6 py-3 text-lg;
+  }
+
+  .icon-button-size-sm {
+    @apply p-2;
+  }
+  .icon-button-size-md {
+    @apply p-1.5 sm:p-2;
+  }
+  .icon-button-size-lg {
+    @apply p-3 sm:p-3.5 md:p-4;
+  }
+  .icon-button-ghost {
+    @apply hover:bg-white/10;
+  }
+  .icon-button-filled {
+    @apply bg-white/10 hover:bg-white/20;
+  }
+
+  /* ============================================================================
+     INPUTS & FORMS
+     ============================================================================ */
+  .input-base {
+    @apply w-full p-3 border-0 bg-white/10 rounded-lg transition-colors focus:outline-none;
+  }
+
+  .search-container {
+    @apply flex items-center gap-2 w-full min-w-0;
+  }
+
+  .search-input {
+    @apply flex-1 min-w-0 px-3 sm:px-4 md:px-5 py-2.5 sm:py-3 md:py-3.5 bg-white/10 border-0 rounded-lg text-sm sm:text-base md:text-lg focus:outline-none placeholder-opacity-70;
+  }
+
+  /* ============================================================================
+     RESPONSIVE UTILITIES
+     ============================================================================ */
+  .text-responsive-xs {
+    @apply text-xs sm:text-sm;
+  }
+  .text-responsive-sm {
+    @apply text-sm sm:text-base;
+  }
+  .text-responsive-base {
+    @apply text-base sm:text-lg;
+  }
+  .text-responsive-lg {
+    @apply text-lg sm:text-xl md:text-2xl;
+  }
+  .text-responsive-xl {
+    @apply text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl;
+  }
+
+  .space-responsive-sm {
+    @apply space-y-3 sm:space-y-4;
+  }
+  .space-responsive-md {
+    @apply space-y-4 sm:space-y-6;
+  }
+  .space-responsive-lg {
+    @apply space-y-6 sm:space-y-8;
+  }
+
+  .p-responsive-sm {
+    @apply p-3 sm:p-4;
+  }
+  .p-responsive-md {
+    @apply p-4 sm:p-6 lg:p-8;
+  }
+  .p-responsive-lg {
+    @apply p-4 sm:p-8 lg:p-10;
+  }
+
+  .gap-responsive-sm {
+    @apply gap-2 sm:gap-3;
+  }
+  .gap-responsive-md {
+    @apply gap-2 sm:gap-3 md:gap-4;
+  }
+
+  .icon-sm {
+    @apply w-4 h-4 sm:w-5 sm:h-5;
+  }
+  .icon-md {
+    @apply w-5 h-5 sm:w-6 sm:h-6;
+  }
+  .icon-lg {
+    @apply w-6 h-6 sm:w-7 sm:h-7;
+  }
+  .icon-xl {
+    @apply w-8 h-8 sm:w-10 sm:h-10;
+  }
+
+  /* ============================================================================
+     ANIMATIONS
+     ============================================================================ */
+  .animate-scale-hover {
+    @apply hover:scale-105 transition-transform duration-200;
+  }
+  .animate-brightness-hover {
+    @apply hover:brightness-110 transition-all duration-200;
+  }
+  .animate-scale-brightness-hover {
+    @apply animate-scale-hover animate-brightness-hover;
+  }
+
+  /* ============================================================================
+     GRIDS
+     ============================================================================ */
+  .grid-responsive-3-4-6 {
+    @apply grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6;
+  }
+
+  .grid-mood-selector {
+    @apply grid grid-cols-7 items-center h-12 justify-items-center;
+  }
+
+  .grid-calendar {
+    @apply grid grid-cols-7;
+  }
+
+  /* ============================================================================
+     MODALS
+     ============================================================================ */
+  .modal-header {
+    @apply flex items-center justify-between p-2 border-b border-white/10;
+  }
+  .modal-content {
+    @apply p-6;
+  }
+  .modal-footer {
+    @apply flex gap-3 w-full;
+  }
+
+  .modal-size-sm {
+    @apply max-w-sm;
+  }
+  .modal-size-md {
+    @apply max-w-lg;
+  }
+  .modal-size-lg {
+    @apply max-w-2xl;
+  }
+  .modal-size-xl {
+    @apply max-w-4xl;
+  }
+  .modal-size-full {
+    @apply w-full h-full max-w-none max-h-none rounded-none;
+  }
+  .modal-content-scrollable {
+    @apply max-h-[85vh] overflow-y-auto;
+  }
+  .modal-content-full-height {
+    @apply h-full flex flex-col;
+  }
+
+  /* ============================================================================
+     NAVIGATION & HEADERS
+     ============================================================================ */
+  .nav-container {
+    @apply flex items-center min-w-0 flex-1;
+  }
+  .nav-center {
+    @apply flex-1 flex justify-center items-center min-w-0;
+  }
+  .nav-button-group {
+    @apply flex items-center gap-responsive-sm flex-shrink-0;
+  }
+
+  .header-container {
+    @apply flex items-center justify-between p-3 border-b border-white/10 flex-shrink-0;
+  }
+  .diary-header {
+    @apply p-2 rounded-t-2xl shadow-lg;
+    background-color: var(--color-base-bg);
+  }
+  .header-title {
+    @apply text-lg font-semibold text-center flex-1 min-w-0;
+  }
+  .header-spacer {
+    @apply w-8 flex-shrink-0;
+  }
+
+  .view-mode-toggle {
+    @apply flex bg-white/10 rounded-lg p-1 sm:p-1.5;
+  }
+  .view-mode-button {
+    @apply p-2 sm:p-2.5 md:p-3 rounded-md transition-colors;
+  }
+  .view-mode-button-active {
+    @apply bg-white/20;
+  }
+  .view-mode-button-inactive {
+    @apply hover:bg-white/10;
+  }
+
+  /* ============================================================================
+     ENTRIES & CONTENT
+     ============================================================================ */
+  .entry-header {
+    @apply flex-between;
+  }
+  .entry-date {
+    @apply text-responsive-sm font-semibold;
+  }
+  .entry-mood-indicator {
+    @apply flex items-center flex-shrink-0;
+  }
+  .entry-content {
+    @apply text-responsive-sm leading-relaxed opacity-90 whitespace-pre-wrap mt-2 sm:mt-3 relative;
+  }
+
+  /* Truncation container for day view entries */
+  .entry-content-truncated {
+    max-height: 12rem;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .entry-content-truncated.needs-truncation::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 4rem;
+    background: linear-gradient(transparent, var(--color-base-bg));
+    pointer-events: none;
+  }
+
+  .entry-preview-container {
+    @apply p-4 sm:p-5 lg:p-6;
+  }
+  .entry-preview-centered {
+    @apply card-interactive p-responsive-sm flex flex-col justify-center;
+  }
+
+  /* ============================================================================
+     CALENDAR
+     ============================================================================ */
+  .calendar-container {
+    @apply select-none cursor-grab transition-all duration-300 ease-out active:cursor-grabbing;
+  }
+
+  .calendar-weekday {
+    @apply text-center text-xs sm:text-sm font-medium py-0.5 sm:py-1 opacity-70;
+  }
+
+  .calendar-day-base {
+    @apply rounded-full flex-center cursor-pointer transition-all duration-200 animate-scale-hover;
+  }
+
+  .calendar-day-small {
+    @apply w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 text-[10px] sm:text-xs lg:text-sm flex-shrink-0;
+  }
+  .calendar-day-medium {
+    @apply aspect-square text-xs sm:text-sm flex-grow flex-shrink min-w-0;
+  }
+  .calendar-day-large {
+    @apply w-12 h-12 sm:w-14 sm:h-14 text-sm sm:text-base flex-shrink-0;
+  }
+
+  .calendar-day-not-current-month {
+    @apply opacity-15;
+  }
+  .calendar-day-future {
+    @apply opacity-50;
+  }
+  .calendar-day-not-current-month.calendar-day-future {
+    @apply opacity-15;
+  }
+  .calendar-day-has-entry {
+    @apply font-semibold;
+  }
+
+  .mini-month-container {
+    @apply rounded-lg shadow-md h-full flex flex-col w-full cursor-pointer focus:outline-none transition-all duration-200 hover:scale-105 hover:brightness-110 focus:shadow-lg;
+  }
+
+  .mini-month-title {
+    @apply text-xs sm:text-sm font-medium mb-2 py-1 sm:py-1.5 text-center opacity-80;
+  }
+
+  .mini-month-grid {
+    @apply grid grid-cols-7 gap-0.5 sm:gap-1 justify-items-center flex-1;
+  }
+
+  /* ============================================================================
+     MOOD SELECTOR
+     ============================================================================ */
+  .mood-selector-circle {
+    @apply rounded-full transition-all duration-300 ease-out animate-scale-hover active:scale-95 focus:outline-none touch-manipulation;
+  }
+
+  .mood-selector-circle-selected {
+    @apply w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 scale-110;
+  }
+
+  .mood-selector-circle-unselected {
+    @apply w-9 h-9 sm:w-11 sm:h-11 md:w-12 md:h-12;
+  }
+
+  /* ============================================================================
+     DIARY MODAL
+     ============================================================================ */
+  .diary-modal-container {
+    @apply w-full h-full flex flex-col max-h-screen overflow-hidden;
+    background-color: var(--color-base-bg);
+  }
+
+  .diary-content-compact {
+    @apply flex-1 p-2 space-y-2 overflow-hidden flex flex-col min-h-0;
+  }
+  .diary-mood-section {
+    @apply text-center flex-shrink-0 rounded-2xl shadow-lg px-4 py-3;
+  }
+  .diary-mood-title {
+    @apply text-responsive-base font-medium text-center mb-0.5;
+  }
+  .diary-mood-selector {
+    @apply flex justify-center;
+  }
+  .diary-mood-label {
+    @apply text-responsive-xs opacity-70 mt-0;
+  }
+  .diary-textarea-container-compact {
+    @apply flex-1 flex flex-col min-h-0 rounded-2xl shadow-lg p-3 sm:p-4 transition-colors duration-200;
+    background-color: var(--color-base-bg);
+  }
+  .diary-textarea {
+    @apply w-full border-0 bg-transparent focus:outline-none placeholder-opacity-70 transition-colors duration-200 h-full resize-none text-sm sm:text-base leading-relaxed;
+    color: var(--color-text);
+    --tw-placeholder-color: var(--color-text);
+    caret-color: var(--color-text);
+    spellcheck: true;
+    overflow-y: auto;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+  }
+
+  .diary-textarea:empty:before {
+    content: attr(data-placeholder);
+    color: var(--color-text);
+    opacity: 0.4;
+    pointer-events: none;
+  }
+
+  .diary-textarea:not(:focus) {
+    text-decoration: none !important;
+    -webkit-text-decoration-line: none !important;
+    text-decoration-line: none !important;
+  }
+
+  .diary-textarea b,
+  .diary-textarea strong {
+    font-weight: bold;
+  }
+
+  .diary-textarea i,
+  .diary-textarea em {
+    font-style: italic;
+  }
+
+  .diary-textarea u {
+    text-decoration: underline;
+  }
+
+  .diary-textarea-container-compact:has(.diary-textarea:focus) {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+  }
+
+  .light-mode .diary-textarea-container-compact:has(.diary-textarea:focus) {
+    background-color: rgba(0, 0, 0, 0.1) !important;
+  }
+  .diary-actions-compact {
+    @apply flex justify-between items-center gap-4 mt-2 flex-shrink-0 px-2;
+  }
+  .diary-action-button {
+    @apply w-10 h-10 rounded-full flex-center transition-all duration-200 hover:scale-105 hover:brightness-110 focus:outline-none;
+    background-color: var(--color-base-bg);
+    color: var(--color-text);
+  }
+  .diary-action-disabled {
+    @apply opacity-30 cursor-not-allowed hover:scale-100 hover:brightness-100;
+  }
+  .diary-action-active {
+    background-color: var(--color-accent);
+    color: white;
+  }
+
+  /* ============================================================================
+     SETTINGS & COLOR PICKER
+     ============================================================================ */
+  .settings-section {
+    @apply border-t border-white/20 pt-4;
+  }
+  .settings-theme-row {
+    @apply flex items-center justify-between mb-4;
+  }
+  .settings-reset-button {
+    @apply flex items-center gap-1 text-xs hover:opacity-70 transition-colors animate-brightness-hover opacity-70;
+  }
+  .settings-data-section {
+    @apply space-y-2;
+  }
+
+  .color-grid-main {
+    @apply grid grid-cols-4 gap-2 justify-items-center;
+  }
+  .color-grid-moods {
+    @apply grid grid-cols-7 gap-2 justify-items-center;
+  }
+  .color-button {
+    @apply w-8 h-8 rounded border border-white/20 animate-scale-brightness-hover;
+  }
+  .color-button-mood {
+    @apply w-7 h-7 rounded-full border border-white/20 animate-scale-brightness-hover;
+  }
+
+  .color-picker-container {
+    @apply text-center mb-3;
+  }
+  .color-picker-title {
+    @apply text-sm opacity-60 mb-1 leading-none;
+  }
+  .color-picker-subtitle {
+    @apply text-xl font-semibold px-1.5 py-0.5 rounded-lg;
+    line-height: 1.5rem;
+    min-height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .color-picker-display {
+    @apply flex justify-center mb-4;
+  }
+  .color-picker-native {
+    @apply w-32 h-32 cursor-pointer border-0 rounded-lg;
+  }
+  .color-picker-input-row {
+    @apply flex-center gap-2 mb-4;
+  }
+  .color-picker-preview {
+    @apply w-8 h-8 rounded border-2 border-white/20;
+  }
+  .color-picker-text-input {
+    @apply px-2 py-1 text-sm border-0 bg-white/10 rounded input-base;
+  }
+  .color-picker-label-wrapper {
+    @apply rounded-lg transition-colors duration-200 px-1.5 py-0.5;
+    min-height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .color-picker-label-wrapper:has(input:focus) {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+  }
+  .light-mode .color-picker-label-wrapper:has(input:focus) {
+    background-color: rgba(0, 0, 0, 0.1) !important;
+  }
+  .color-picker-label-input {
+    @apply text-xl font-semibold text-center border-0 bg-transparent transition-colors focus:outline-none w-full p-0 m-0;
+    line-height: 1.5rem;
+    box-sizing: border-box;
+  }
+  .color-picker-upload-section {
+    @apply mb-4 space-y-3;
+  }
+  .color-picker-upload-button {
+    @apply w-full flex-center gap-2 py-2 bg-white/10 rounded-lg font-medium hover:bg-white/20 animate-brightness-hover cursor-pointer;
+  }
+  .color-picker-remove-button {
+    @apply text-xs hover:opacity-70 animate-brightness-hover py-1;
+  }
+
+  .theme-toggle {
+    @apply relative w-12 h-6 rounded-full transition-all duration-300 bg-white/10;
+  }
+  .theme-toggle-slider {
+    @apply absolute top-0.5 left-0.5 w-5 h-5 rounded-full shadow-md transition-all duration-300 flex items-center justify-center;
+  }
+  .theme-toggle-active {
+    @apply left-6;
+  }
+
+  /* ============================================================================
+     CONFIRMATIONS & STATUS
+     ============================================================================ */
+  .confirm-modal-content {
+    @apply text-center mb-6;
+  }
+  .confirm-modal-icon {
+    @apply text-6xl mb-4;
+  }
+  .confirm-modal-title {
+    @apply text-xl font-bold mb-2;
+  }
+  .confirm-modal-description {
+    @apply opacity-70;
+  }
+
+  .status-message {
+    @apply fixed top-4 left-1/2 -translate-x-1/2 px-4 py-2 rounded-lg text-sm font-medium z-[9999] text-center max-w-[calc(100vw-2rem)];
+    backdrop-filter: blur(8px);
+    animation: slideInFromTop 0.3s ease-out;
+  }
+  .status-success {
+    @apply bg-green-500/90 text-white;
+  }
+  .status-error {
+    @apply bg-red-500/90 text-white;
+  }
+
+  /* ============================================================================
+     EMPTY STATES
+     ============================================================================ */
+  .empty-state {
+    @apply card-base p-6 sm:p-8 text-center;
+  }
+  .empty-state-icon {
+    @apply text-6xl mb-4;
+  }
+  .empty-state-title {
+    @apply text-xl font-semibold mb-2;
+  }
+  .empty-state-subtitle {
+    @apply opacity-70;
+  }
+
+  /* ============================================================================
+     UTILITIES
+     ============================================================================ */
+  .section-title {
+    @apply text-sm font-medium;
+  }
+
+  /* ============================================================================
+     SAVE BUTTON ANIMATION
+     ============================================================================ */
+  .save-button-container {
+    @apply relative;
+  }
+
+  .save-icon-wrapper {
+    @apply flex items-center justify-center;
+  }
+
+  .save-spinner {
+    @apply w-5 h-5 border-2 border-current border-t-transparent rounded-full;
+    animation: spin 0.6s linear infinite;
+  }
+
+  .checkmark-icon {
+    animation: checkmarkPop 0.4s ease-out;
+  }
+}
+
+/* ============================================================================
+   MOOD COLOR SYSTEM
+   ============================================================================ */
+.bg-base-light {
+  background-color: var(--color-base-bg);
+}
+.text-base-light {
+  color: var(--color-text);
+}
+
+.mood-selector-grey,
+.mood-color-grey {
+  background-color: var(--color-mood-grey);
+}
+.mood-selector-red,
+.mood-color-red {
+  background-color: var(--color-mood-red);
+}
+.mood-selector-orange,
+.mood-color-orange {
+  background-color: var(--color-mood-orange);
+}
+.mood-selector-yellow,
+.mood-color-yellow {
+  background-color: var(--color-mood-yellow);
+}
+.mood-selector-green,
+.mood-color-green {
+  background-color: var(--color-mood-green);
+}
+.mood-selector-blue,
+.mood-color-blue {
+  background-color: var(--color-mood-blue);
+}
+.mood-selector-purple,
+.mood-color-purple {
+  background-color: var(--color-mood-purple);
+}
+
+/* ============================================================================
+   THEME SYSTEM
+   ============================================================================ */
+.light-mode .bg-white\/10,
+.light-mode .hover\:bg-white\/10:hover {
+  background-color: rgba(0, 0, 0, 0.1) !important;
+}
+.light-mode .bg-white\/20,
+.light-mode .hover\:bg-white\/20:hover {
+  background-color: rgba(0, 0, 0, 0.2) !important;
+}
+.light-mode .border-white\/10 {
+  border-color: rgba(0, 0, 0, 0.1) !important;
+}
+.light-mode .border-white\/20 {
+  border-color: rgba(0, 0, 0, 0.2) !important;
+}
+
+.dark .bg-white\/10,
+.dark .hover\:bg-white\/10:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+.dark .bg-white\/20,
+.dark .hover\:bg-white\/20:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+.dark .border-white\/10 {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+.dark .border-white\/20 {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* ============================================================================
+   ANIMATIONS
+   ============================================================================ */
+
+@keyframes zoomOutEnd {
+  0% {
+    transform: scale(1.2);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes zoomInEnd {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInFromTop {
+  0% {
+    transform: translate(-50%, -100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes checkmarkPop {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* ============================================================================
+   BROWSER COMPATIBILITY
+   ============================================================================ */
+input[type='date']::-webkit-calendar-picker-indicator,
+input[type='month']::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  opacity: 0.7;
+  background-image: var(--calendar-icon-svg, url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='gray' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='18' rx='2' ry='2'%3E%3C/rect%3E%3Cline x1='16' y1='2' x2='16' y2='6'%3E%3C/line%3E%3Cline x1='8' y1='2' x2='8' y2='6'%3E%3C/line%3E%3Cline x1='3' y1='10' x2='21' y2='10'%3E%3C/line%3E%3C/svg%3E"));
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 20px;
+  height: 20px;
+}
+
+input[type='date']::-moz-calendar-picker-indicator,
+input[type='month']::-moz-calendar-picker-indicator {
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+input[type='date']:focus,
+input[type='month']:focus,
+input[type='number']:focus {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+/* ============================================================================
+   ACCESSIBILITY & PERFORMANCE
+   ============================================================================ */
+
+[data-zoom-container] {
+  transition: none !important;
+}
+[data-zoom-container].transitioning {
+  transition: transform 300ms ease-out, opacity 300ms ease-out !important;
+}
+
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid rgba(59, 130, 246, 0.5);
+  outline-offset: 2px;
+}
+
+input[type='date']:focus-visible,
+input[type='number']:focus-visible {
+  outline: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

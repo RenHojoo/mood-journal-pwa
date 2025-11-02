@@ -1,0 +1,20 @@
+{
+  "name": "Mood Journal",
+  "short_name": "Mood Journal",
+  "description": "Track your daily moods and keep a personal journal",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#1e1e1e",
+  "theme_color": "#d66a8c",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["productivity", "lifestyle", "health"]
+}
