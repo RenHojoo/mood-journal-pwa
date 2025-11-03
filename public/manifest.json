@@ -6,6 +6,7 @@
   "scope": "/mood-journal-pwa/",
   "display": "standalone",
   "background_color": "#1e1e1e",
+  "theme_color": "#1e1e1e",
   "orientation": "portrait-primary",
   "icons": [
     {
