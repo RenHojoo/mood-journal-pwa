@@ -49,6 +49,20 @@ html {
   height: 100%;
   height: -webkit-fill-available;
   -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  font-size: 16px;
+}
+
+@media screen and (max-width: 640px) {
+  html {
+    font-size: 17px;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  html {
+    font-size: 16px;
+  }
 }
 
 .bg-dynamic-gradient {
