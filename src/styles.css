@@ -48,6 +48,7 @@ body {
 html {
   height: 100%;
   height: -webkit-fill-available;
+  -webkit-text-size-adjust: 100%;
 }
 
 .bg-dynamic-gradient {
