@@ -3,14 +3,19 @@
   "short_name": "Mood Journal",
   "description": "Track your daily moods and keep a personal journal",
   "start_url": "/mood-journal-pwa/",
-  "scope": "/mood-journal-pwa/"
+  "scope": "/mood-journal-pwa/",
   "display": "standalone",
   "background_color": "#1e1e1e",
   "theme_color": "#d66a8c",
   "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "icon.png",
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
