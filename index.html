@@ -2,28 +2,34 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="icon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#d66a8c" />
     <meta name="description" content="Track your daily moods and keep a personal journal" />
-    <link rel="manifest" href="/manifest.json" />
-    <link rel="apple-touch-icon" href="/icon.png" />
+    <!-- favicon + PWA icons -->
+    <link rel="icon" type="image/png" href="/mood-journal-pwa/assets/icon-Drhcwg3O.png" />
+    <link rel="apple-touch-icon" href="/mood-journal-pwa/assets/icon-Drhcwg3O.png" />
+    <!-- manifest -->
+    <link rel="manifest" href="/mood-journal-pwa/manifest.json" />
     <title>Mood Journal</title>
+    <!-- JS + CSS -->
+    <script type="module" crossorigin src="/mood-journal-pwa/assets/index-DNQ4Dvum.js"></script>
+    <link rel="stylesheet" crossorigin href="/mood-journal-pwa/assets/index-DNSebSUg.css">
+    <!-- optional: Vite PWA registration script -->
+    <script id="vite-plugin-pwa:register-sw" src="/mood-journal-pwa/registerSW.js"></script>
   </head>
   <body>
     <div id="root"></div>
-    <script type="module" src="/src/app.tsx"></script>
+    <!-- manual Service Worker registration -->
     <script>
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/sw.js').then(
-            (registration) => {
+          navigator.serviceWorker.register('/mood-journal-pwa/sw.js')
+            .then(registration => {
               console.log('ServiceWorker registered:', registration.scope);
-            },
-            (error) => {
+            })
+            .catch(error => {
               console.log('ServiceWorker registration failed:', error);
-            }
-          );
+            });
         });
       }
     </script>
