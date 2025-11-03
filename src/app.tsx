@@ -117,8 +117,12 @@ function App() {
       className={`min-h-screen h-full transition-colors duration-300 ${
         settings.isDarkMode ? 'dark' : 'light-mode'
       } ${backgroundClass}`}
+      style={{
+        overflow: 'auto',
+        WebkitOverflowScrolling: 'touch'
+      } as React.CSSProperties}
     >
-      <div className="container mx-auto px-3 sm:px-4 lg:px-6 py-3 sm:py-6 lg:py-8 max-w-7xl">
+      <div className="container mx-auto px-3 sm:px-4 lg:px-6 py-3 sm:py-6 lg:py-8 max-w-7xl" style={{ paddingBottom: 'calc(env(safe-area-inset-bottom) + 1rem)' } as React.CSSProperties}>
         <AppHeader
           currentDate={currentDate}
           onDateChange={setCurrentDate}
