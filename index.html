@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="icon.png" />
+    <link rel="icon" type="image/png" href="./icon.png" />
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
@@ -18,22 +18,27 @@
       content="black-translucent"
     />
     <meta name="theme-color" content="#1e1e1e" />
-    <link rel="manifest" href="/manifest.json" />
-    <link rel="apple-touch-icon" href="/icon.png" />
+
+    <!-- 👇 Notice: no leading slash -->
+    <link rel="manifest" href="./manifest.json" />
+    <link rel="apple-touch-icon" href="./icon.png" />
+
     <title>Mood Journal</title>
   </head>
   <body>
     <div id="root"></div>
-    <script type="module" src="/src/app.tsx"></script>
+
+    <!-- 👇 Again, relative paths -->
+    <script type="module" src="./src/app.tsx"></script>
     <script>
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/sw.js').then(
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker.register("./sw.js").then(
             (registration) => {
-              console.log('ServiceWorker registered:', registration.scope);
+              console.log("ServiceWorker registered:", registration.scope);
             },
             (error) => {
-              console.log('ServiceWorker registration failed:', error);
+              console.log("ServiceWorker registration failed:", error);
             }
           );
         });
