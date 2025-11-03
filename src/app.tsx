@@ -90,7 +90,7 @@ function App() {
       root.style.setProperty(`--color-mood-${mood}`, color);
     });
 
-    const metaThemeColor = document.querySelector('meta[name="theme-color"]');
+    const metaThemeColor = document.getElementById('theme-color-meta');
     if (metaThemeColor) {
       metaThemeColor.setAttribute('content', customColors.base);
     }
