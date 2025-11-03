@@ -7,20 +7,29 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
     />
-    <meta
-      name="description"
-      content="Track your daily moods and keep a personal journal"
-    />
+    <meta name="description" content="Track your daily moods and keep a personal journal" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta
-      name="apple-mobile-web-app-status-bar-style"
-      content="black-translucent"
-    />
-    <meta name="theme-color" content="transparent" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="theme-color" content="#1e1e1e" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="color-scheme" content="light dark" />
     <link rel="manifest" href="/manifest.json" />
     <link rel="apple-touch-icon" href="/icon.png" />
     <title>Mood Journal</title>
+    <style>
+      html, body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        background-color: #1e1e1e;
+      }
+      body {
+        padding-top: env(safe-area-inset-top);
+        padding-bottom: env(safe-area-inset-bottom);
+        overscroll-behavior: none;
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>
@@ -28,14 +37,10 @@
     <script>
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-          navigator.serviceWorker.register(`${import.meta.env.BASE_URL}sw.js`).then(
-            (registration) => {
-              console.log('ServiceWorker registered:', registration.scope);
-            },
-            (error) => {
-              console.log('ServiceWorker registration failed:', error);
-            }
-          );
+          navigator.serviceWorker
+            .register(`${import.meta.env.BASE_URL}sw.js`)
+            .then((r) => console.log('ServiceWorker registered:', r.scope))
+            .catch((e) => console.log('ServiceWorker registration failed:', e));
         });
       }
     </script>
