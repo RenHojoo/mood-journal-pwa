@@ -1,26 +1,56 @@
-import React, { useState, useEffect, useMemo, useCallback, lazy, Suspense, useRef } from 'react';
+import React, {
+  useState,
+  useEffect,
+  useMemo,
+  useCallback,
+  lazy,
+  Suspense,
+  useRef,
+} from 'react';
 import { createRoot } from 'react-dom/client';
 import { AppHeader } from './Header';
 import { Diary } from './Diary';
 import { MoodEntry, ViewMode, Settings, DEFAULT_SETTINGS } from './types';
 import { useLocalStorage } from './hooks';
-import { formatDate, getValidEntries, getCalendarIconSvg, calculateGradientColors } from './utils';
+import {
+  formatDate,
+  getValidEntries,
+  getCalendarIconSvg,
+  calculateGradientColors,
+} from './utils';
 import './styles.css';
 
-const ViewMonth = lazy(() => import('./ViewModes').then(module => ({ default: module.ViewMonth })));
-const ViewYear = lazy(() => import('./ViewModes').then(module => ({ default: module.ViewYear })));
-const ViewDay = lazy(() => import('./ViewModes').then(module => ({ default: module.ViewDay })));
-const SettingsModal = lazy(() => import('./Settings').then(module => ({ default: module.SettingsModal })));
+const ViewMonth = lazy(() =>
+  import('./ViewModes').then((module) => ({ default: module.ViewMonth }))
+);
+const ViewYear = lazy(() =>
+  import('./ViewModes').then((module) => ({ default: module.ViewYear }))
+);
+const ViewDay = lazy(() =>
+  import('./ViewModes').then((module) => ({ default: module.ViewDay }))
+);
+const SettingsModal = lazy(() =>
+  import('./Settings').then((module) => ({ default: module.SettingsModal }))
+);
 
 function App() {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [viewMode, setViewMode] = useState<ViewMode>('month');
-  const [entries, setEntries] = useLocalStorage<MoodEntry[]>('mood-entries', []);
-  const [settings, setSettings] = useLocalStorage<Settings>('mood-settings', DEFAULT_SETTINGS);
+  const [entries, setEntries] = useLocalStorage<MoodEntry[]>(
+    'mood-entries',
+    []
+  );
+  const [settings, setSettings] = useLocalStorage<Settings>(
+    'mood-settings',
+    DEFAULT_SETTINGS
+  );
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const [statusMessage, setStatusMessage] = useState<{ text: string; type: 'success' | 'error' } | null>(null);
+  const [statusMessage, setStatusMessage] = useState<{
+    text: string;
+    type: 'success' | 'error';
+  } | null>(null);
   const statusTimeoutRef = useRef<NodeJS.Timeout>();
 
   useEffect(() => {
@@ -29,13 +59,16 @@ function App() {
     }
   }, []);
 
-  const showStatusMessage = useCallback((message: string, type: 'success' | 'error' = 'success') => {
-    if (statusTimeoutRef.current) {
-      clearTimeout(statusTimeoutRef.current);
-    }
-    setStatusMessage({ text: message, type });
-    statusTimeoutRef.current = setTimeout(() => setStatusMessage(null), 3000);
-  }, []);
+  const showStatusMessage = useCallback(
+    (message: string, type: 'success' | 'error' = 'success') => {
+      if (statusTimeoutRef.current) {
+        clearTimeout(statusTimeoutRef.current);
+      }
+      setStatusMessage({ text: message, type });
+      statusTimeoutRef.current = setTimeout(() => setStatusMessage(null), 3000);
+    },
+    []
+  );
   useEffect(() => {
     const root = document.documentElement;
     const { customColors } = settings;
@@ -43,7 +76,10 @@ function App() {
     root.style.setProperty('--color-base-bg', customColors.base);
     root.style.setProperty('--color-accent', customColors.accent);
     root.style.setProperty('--color-text', customColors.text);
-    root.style.setProperty('--calendar-icon-svg', getCalendarIconSvg(customColors.text));
+    root.style.setProperty(
+      '--calendar-icon-svg',
+      getCalendarIconSvg(customColors.text)
+    );
 
     const gradientColors = calculateGradientColors(customColors.base);
     root.style.setProperty('--gradient-from', gradientColors.from);
@@ -53,13 +89,27 @@ function App() {
     Object.entries(customColors.moods).forEach(([mood, color]) => {
       root.style.setProperty(`--color-mood-${mood}`, color);
     });
-  }, [settings.customColors.base, settings.customColors.accent, settings.customColors.text, settings.customColors.moods]);
+
+    const metaThemeColor = document.querySelector('meta[name="theme-color"]');
+    if (metaThemeColor) {
+      metaThemeColor.setAttribute('content', customColors.base);
+    }
+  }, [
+    settings.customColors.base,
+    settings.customColors.accent,
+    settings.customColors.text,
+    settings.customColors.moods,
+  ]);
 
   useEffect(() => {
     const body = document.body;
 
     if (settings.backgroundImage) {
-      body.style.setProperty('background-image', `url(${settings.backgroundImage})`, 'important');
+      body.style.setProperty(
+        'background-image',
+        `url(${settings.backgroundImage})`,
+        'important'
+      );
       body.style.setProperty('background-size', 'cover', 'important');
       body.style.setProperty('background-position', 'center', 'important');
       body.style.setProperty('background-attachment', 'fixed', 'important');
@@ -71,18 +121,24 @@ function App() {
     }
   }, [settings.backgroundImage]);
 
-  const handleSaveEntry = useCallback((entry: MoodEntry) => {
-    setEntries((prev) => {
-      const filtered = prev.filter((e) => e.date !== entry.date);
-      if (entry.mood === 'grey' && !entry.diary.trim()) {
-        return filtered;
-      }
-      return [...filtered, entry];
-    });
-  }, [setEntries]);
+  const handleSaveEntry = useCallback(
+    (entry: MoodEntry) => {
+      setEntries((prev) => {
+        const filtered = prev.filter((e) => e.date !== entry.date);
+        if (entry.mood === 'grey' && !entry.diary.trim()) {
+          return filtered;
+        }
+        return [...filtered, entry];
+      });
+    },
+    [setEntries]
+  );
 
   const currentEntry = useMemo(
-    () => selectedDate ? entries.find((e) => e.date === formatDate(selectedDate)) : undefined,
+    () =>
+      selectedDate
+        ? entries.find((e) => e.date === formatDate(selectedDate))
+        : undefined,
     [selectedDate, entries]
   );
 
@@ -105,24 +161,39 @@ function App() {
       root.style.setProperty('--gradient-via', gradientColors.via);
       root.style.setProperty('--gradient-to', gradientColors.to);
     } else if (!settings.backgroundImage) {
-      const gradientColors = calculateGradientColors(settings.customColors.base);
+      const gradientColors = calculateGradientColors(
+        settings.customColors.base
+      );
       root.style.setProperty('--gradient-from', gradientColors.from);
       root.style.setProperty('--gradient-via', gradientColors.via);
       root.style.setProperty('--gradient-to', gradientColors.to);
     }
-  }, [settings.backgroundColor, settings.backgroundImage, settings.customColors.base]);
+  }, [
+    settings.backgroundColor,
+    settings.backgroundImage,
+    settings.customColors.base,
+  ]);
 
   return (
     <div
       className={`min-h-screen h-full transition-colors duration-300 ${
         settings.isDarkMode ? 'dark' : 'light-mode'
       } ${backgroundClass}`}
-      style={{
-        overflow: 'auto',
-        WebkitOverflowScrolling: 'touch'
-      } as React.CSSProperties}
+      style={
+        {
+          overflow: 'auto',
+          WebkitOverflowScrolling: 'touch',
+        } as React.CSSProperties
+      }
     >
-      <div className="container mx-auto px-3 sm:px-4 lg:px-6 py-3 sm:py-6 lg:py-8 max-w-7xl" style={{ paddingBottom: 'calc(env(safe-area-inset-bottom) + 1rem)' } as React.CSSProperties}>
+      <div
+        className="container mx-auto px-3 sm:px-4 lg:px-6 py-3 sm:py-6 lg:py-8 max-w-7xl"
+        style={
+          {
+            paddingBottom: 'calc(env(safe-area-inset-bottom) + 1rem)',
+          } as React.CSSProperties
+        }
+      >
         <AppHeader
           currentDate={currentDate}
           onDateChange={setCurrentDate}
@@ -135,37 +206,45 @@ function App() {
         />
 
         <main className="space-y-3 sm:space-y-6">
-          <Suspense fallback={<div className="flex-center min-h-[400px]"><div className="text-responsive-base opacity-70">Loading...</div></div>}>
+          <Suspense
+            fallback={
+              <div className="flex-center min-h-[400px]">
+                <div className="text-responsive-base opacity-70">
+                  Loading...
+                </div>
+              </div>
+            }
+          >
             {viewMode === 'month' && (
               <ViewMonth
-              currentDate={currentDate}
-              entries={entries}
-              onEntryEdit={setSelectedDate}
-              onDateChange={setCurrentDate}
-              onViewModeChange={setViewMode}
-              settings={settings}
-            />
-          )}
+                currentDate={currentDate}
+                entries={entries}
+                onEntryEdit={setSelectedDate}
+                onDateChange={setCurrentDate}
+                onViewModeChange={setViewMode}
+                settings={settings}
+              />
+            )}
 
-          {viewMode === 'year' && (
-            <ViewYear
-              currentDate={currentDate}
-              entries={entries}
-              onDateChange={setCurrentDate}
-              onViewModeChange={setViewMode}
-              settings={settings}
-            />
-          )}
+            {viewMode === 'year' && (
+              <ViewYear
+                currentDate={currentDate}
+                entries={entries}
+                onDateChange={setCurrentDate}
+                onViewModeChange={setViewMode}
+                settings={settings}
+              />
+            )}
 
-          {viewMode === 'day' && (
-            <ViewDay
-              entries={validEntries}
-              onEntryClick={handleEntryClick}
-              searchQuery={searchQuery}
-              settings={settings}
-              onViewModeChange={setViewMode}
-            />
-          )}
+            {viewMode === 'day' && (
+              <ViewDay
+                entries={validEntries}
+                onEntryClick={handleEntryClick}
+                searchQuery={searchQuery}
+                settings={settings}
+                onViewModeChange={setViewMode}
+              />
+            )}
           </Suspense>
         </main>
 
