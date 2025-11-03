@@ -6,6 +6,9 @@ export const useLocalStorage = <T>(
 ): [T, (value: T | ((prev: T) => T)) => void] => {
   const [storedValue, setStoredValue] = useState<T>(() => {
     try {
+      if (typeof window === 'undefined' || !window.localStorage) {
+        return initialValue;
+      }
       const item = window.localStorage.getItem(key);
       if (!item) return initialValue;
 
@@ -17,8 +20,13 @@ export const useLocalStorage = <T>(
         return { ...initialValue, ...parsedValue };
       }
       return parsedValue;
-    } catch {
-      window.localStorage.removeItem(key);
+    } catch (error) {
+      console.warn('LocalStorage read error:', error);
+      try {
+        if (window.localStorage) {
+          window.localStorage.removeItem(key);
+        }
+      } catch {}
       return initialValue;
     }
   });
@@ -32,7 +40,9 @@ export const useLocalStorage = <T>(
         clearTimeout(saveTimeoutRef.current);
         if (pendingValueRef.current !== null) {
           try {
-            window.localStorage.setItem(key, JSON.stringify(pendingValueRef.current));
+            if (window.localStorage) {
+              window.localStorage.setItem(key, JSON.stringify(pendingValueRef.current));
+            }
           } catch {}
         }
       }
@@ -51,11 +61,15 @@ export const useLocalStorage = <T>(
 
       saveTimeoutRef.current = setTimeout(() => {
         try {
-          window.localStorage.setItem(key, JSON.stringify(newValue));
-          pendingValueRef.current = null;
+          if (window.localStorage) {
+            window.localStorage.setItem(key, JSON.stringify(newValue));
+            pendingValueRef.current = null;
+          }
         } catch (error) {
           if (error instanceof Error && error.name === 'QuotaExceededError') {
             console.error('Storage quota exceeded');
+          } else {
+            console.warn('LocalStorage write error:', error);
           }
         }
       }, 100);
