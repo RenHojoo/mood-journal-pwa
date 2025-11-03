@@ -1,7 +1,7 @@
 {
   "name": "Mood Journal",
   "short_name": "Mood Journal",
-  "description": "Track your daily moods and keep a personal journal",
+  "description": "Track your moods and keep a journal.",
   "start_url": "/mood-journal-pwa/",
   "scope": "/mood-journal-pwa/",
   "display": "standalone",
