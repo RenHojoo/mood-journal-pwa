@@ -1,1 +1,2 @@
-mood-journal-pwa: https://stackblitz.com/~/github.com/RenHojoo/mood-journal-pwa
+stackblitz editor: https://stackblitz.com/~/github.com/RenHojoo/mood-journal-pwa
+github deployment: https://renhojoo.github.io/mood-journal-pwa/
