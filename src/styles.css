@@ -45,12 +45,27 @@ body {
   height: 100%;
 }
 
+@media (max-width: 480px) {
+  body {
+    transform: scale(1.15);
+    transform-origin: top left;
+    width: 86.95%;
+    height: 86.95%;
+  }
+}
+
 html {
   height: 100%;
   height: -webkit-fill-available;
-  font-size: clamp(16px, 4vw, 18px);
-  -webkit-text-size-adjust: none;
-  text-size-adjust: none;
+  font-size: 16px;
+  -webkit-text-size-adjust: 100% !important;
+  text-size-adjust: 100% !important;
+}
+
+@media (max-width: 480px) {
+  html {
+    font-size: 18px;
+  }
 }
 
 .bg-dynamic-gradient {
@@ -158,6 +173,13 @@ textarea::placeholder {
   }
   .button-size-lg {
     @apply px-6 py-3 text-lg;
+  }
+
+  @media (max-width: 480px) {
+    .text-sm { @apply text-base; }
+    .text-base { @apply text-lg; }
+    .text-lg { @apply text-xl; }
+    .text-xl { @apply text-2xl; }
   }
 
   .icon-button-size-sm {
