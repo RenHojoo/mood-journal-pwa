@@ -4,7 +4,7 @@
   "description": "Track your daily moods and keep a personal journal",
   "start_url": "/mood-journal-pwa/",
   "scope": "/mood-journal-pwa/",
-  "display": "fullscreen",
+  "display": "standalone",
   "background_color": "#1e1e1e",
   "orientation": "portrait-primary",
   "icons": [
