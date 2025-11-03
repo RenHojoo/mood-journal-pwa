@@ -1,6 +1,6 @@
 {
   "name": "Mood Journal",
-  "short_name": "Mood",
+  "short_name": "Journal",
   "description": "Track your moods and keep a journal.",
   "start_url": "/mood-journal-pwa/",
   "scope": "/mood-journal-pwa/",
